@@ -2,8 +2,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-.reports
-.reports/gallery-lib
+
+### Carina ###
+reports
+
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
