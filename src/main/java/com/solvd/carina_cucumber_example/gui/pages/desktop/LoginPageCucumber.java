@@ -13,6 +13,10 @@ public class LoginPageCucumber extends LoginPageBaseCucumber {
 
     @FindBy(xpath = "//a[contains(text(),\"Log Out\")]")
     private ExtendedWebElement logOutButton;
+
+    @FindBy(xpath = "//p[contains(text(),\" tau tau\")]")
+    private ExtendedWebElement userName;
+
     public LoginPageCucumber(WebDriver driver) {
         super(driver);
         setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
@@ -21,5 +25,10 @@ public class LoginPageCucumber extends LoginPageBaseCucumber {
     @Override
     public ExtendedWebElement getLogOutButton() {
         return logOutButton;
+    }
+
+    @Override
+    public ExtendedWebElement getUserName() {
+        return userName;
     }
 }

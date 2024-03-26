@@ -32,7 +32,10 @@
         <carina-cucumber_version>1.2.7</carina-cucumber_version>
         <java.version>21</java.version>
         <zebrunner-agent.version>1.9.8</zebrunner-agent.version>
-        <suite/>
+        <!-- Cucumber reporting -->
+        <maven-cucumber-reporting.version>4.11.2</maven-cucumber-reporting.version>
+<!--        <suite/>-->
+
     </properties>
 
     <dependencies>
@@ -90,6 +93,28 @@
             <artifactId>carina-cucumber</artifactId>
             <version>${carina-cucumber_version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.16.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>7.16.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -132,13 +157,56 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+                    <parallel>methods</parallel>
+                    <useUnlimitedThreads>true</useUnlimitedThreads>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <argLine>-javaagent:${project.build.directory}/agent/zebrunner-agent.jar</argLine>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>${project.build.directory}/test-classes/testng_suites/${suite}.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+<!--                    <useSystemClassLoader>false</useSystemClassLoader>-->
+<!--                    <suiteXmlFiles>-->
+<!--                        <suiteXmlFile>${project.build.directory}/test-classes/testng_suites/${suite}.xml</suiteXmlFile>-->
+<!--                    </suiteXmlFiles>-->
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>${maven-cucumber-reporting.version}</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>cucumber-jvm-example</projectName>
+                            <!-- optional, per documentation set this to "true" to bypass generation
+                                of Cucumber Reports entirely, defaults to false if not specified -->
+                            <skip>false</skip>
+                            <!-- output directory for the generated report -->
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <!-- optional, defaults to outputDirectory if not specified -->
+                            <inputDirectory>${project.build.directory}</inputDirectory>
+                            <jsonFiles>
+                                <!-- supports wildcard or name pattern -->
+                                <param>**/*.json</param>
+                            </jsonFiles>
+                            <!-- optional, defaults to outputDirectory if not specified -->
+                            <classificationDirectory>${project.build.directory}</classificationDirectory>
+                            <classificationFiles>
+                                <!-- supports wildcard or name pattern -->
+                                <param>sample.properties</param>
+                                <param>other.properties</param>
+                            </classificationFiles>
+                            <parallelTesting>false</parallelTesting>
+                            <!-- optional, set true to fail build on test failures -->
+                            <checkBuildResult>false</checkBuildResult>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
 

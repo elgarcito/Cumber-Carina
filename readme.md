@@ -13,7 +13,8 @@ and use the Gherkin language.
 2. You must create a new directory in main folder called [Cucumber](src/main/java/com/solvd/carina_cucumber_example/cucumber)
 3. You must create a new directory called in test/resources [feature](src/test/resources/features)
 4. In [feature](src/test/resources/features) folder you will create the .feature document using Gherkin, as example: 
-`Login.feature`.
+`Login.feature`.This names **should NOT CONTAIN "_"** for example `login_outline.feature` this should be
+`LoginOutline.feature`
 5. Then you sould run this and copy the structure of the failed test
 6. You must create in [Cucumber](src/main/java/com/solvd/carina_cucumber_example/cucumber) a file
 called `Steps.java` or other this is going to be a normal java class, to work with

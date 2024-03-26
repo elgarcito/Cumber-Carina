@@ -9,4 +9,5 @@ public abstract class LoginPageBaseCucumber extends AbstractPage {
         super(driver);
     }
     public abstract ExtendedWebElement getLogOutButton();
+    public abstract ExtendedWebElement getUserName();;
 }
